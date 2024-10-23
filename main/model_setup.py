@@ -1,9 +1,3 @@
-"""
-This script downloads the LibriTTS dataset and creates a PyTorch dataset
-and data loader for it. It also prints some useful information about
-the dataset.
-"""
-
 import torch
 import torchaudio
 from torch.utils.data import Dataset, DataLoader
@@ -11,18 +5,15 @@ import os
 import pandas as pd
 import numpy as np
 
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
-
-torchaudio.datasets.LIBRITTS(root="./data", url="train-clean-100", download=True)
 
 class LibriTTSDataset(Dataset):
     """
     A PyTorch dataset for the LibriTTS dataset.
     """
 
-    def __init__(self, root_dir, subset="train-clean-100"):
+    def __init__(self, root_dir, subset="LibriTTS\\train-clean-100"):
         """
         Initialize the dataset.
 
@@ -74,7 +65,8 @@ class LibriTTSDataset(Dataset):
             tuple: A tuple containing the waveform, sample rate, and text of the sample.
         """
         wav_path, txt_path = self.metadata[idx]
-        waveform, sample_rate = torchaudio.load(wav_path)
+        print(f"Loading {wav_path}")
+        waveform, sample_rate = torchaudio.load(wav_path, format="wav")
         with open(txt_path, "r", encoding="utf-8") as f:
             text = f.read().strip()
         return waveform, sample_rate, text
