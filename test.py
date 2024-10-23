@@ -1,15 +1,18 @@
-import torchaudio
-import torch
+from main.model_setup import LibriTTSDataset
+from torch.utils.data import DataLoader
 
-print(torch.__version__)
-# List available audio backends
-print(torchaudio.__version__)
-print("Available audio backends:", torchaudio.list_audio_backends())
 
-# Try loading a sample audio file (make sure the path is correct)
-try:
-    waveform, sample_rate = torchaudio.load("path/to/your/audio.wav")
-    print("Waveform shape:", waveform.shape)
-    print("Sample rate:", sample_rate)
-except Exception as e:
-    print("Error loading audio:", e)
+dataset = LibriTTSDataset(root_dir="./data")
+batch_size = len(dataset)
+dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=4)
+
+print(f"Dataset size: {len(dataset)}")
+
+for i in range(batch_size):
+    waveform, sample_rate, text = dataset[i]
+    if waveform is not None:  # Check if waveform is loaded successfully
+        print(f"Sample rate: {sample_rate}")
+        print(f"Waveform shape: {waveform.shape}")
+        print(f"Text sample: {text}")
+    else:
+        print("Failed to load the sample.")
