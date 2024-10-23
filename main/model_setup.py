@@ -5,6 +5,8 @@ import os
 import pandas as pd
 import numpy as np
 
+
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
@@ -13,7 +15,7 @@ class LibriTTSDataset(Dataset):
     A PyTorch dataset for the LibriTTS dataset.
     """
 
-    def __init__(self, root_dir, subset="LibriTTS\\train-clean-100"):
+    def __init__(self, root_dir, subset="LibriTTS/train-clean-100"):
         """
         Initialize the dataset.
 
@@ -66,7 +68,12 @@ class LibriTTSDataset(Dataset):
         """
         wav_path, txt_path = self.metadata[idx]
         print(f"Loading {wav_path}")
-        waveform, sample_rate = torchaudio.load(wav_path, format="wav")
+        try:
+            waveform, sample_rate = torchaudio.load(wav_path, format="wav")
+        except RuntimeError as e:
+            print(f"Error loading {wav_path}: {e}")
+            return None, None, None  # Return None if there's an error
+
         with open(txt_path, "r", encoding="utf-8") as f:
             text = f.read().strip()
         return waveform, sample_rate, text
@@ -76,6 +83,9 @@ dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
 
 print(f"Dataset size: {len(dataset)}")
 waveform, sample_rate, text = dataset[0]
-print(f"Sample rate: {sample_rate}")
-print(f"Waveform shape: {waveform.shape}")
-print(f"Text sample: {text}")
+if waveform is not None:  # Check if waveform is loaded successfully
+    print(f"Sample rate: {sample_rate}")
+    print(f"Waveform shape: {waveform.shape}")
+    print(f"Text sample: {text}")
+else:
+    print("Failed to load the sample.")
