@@ -9,6 +9,8 @@ import numpy as np
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
+torchaudio.datasets.LIBRITTS(root="./data", url="train-clean-100", download=True)
+
 class LibriTTSDataset(Dataset):
     """
     A PyTorch dataset for the LibriTTS dataset.
@@ -83,8 +85,6 @@ dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
 print(f"Dataset size: {len(dataset)}")
 waveform, sample_rate, text = dataset[0]
 if waveform is not None:  # Check if waveform is loaded successfully
-    print(f"Sample rate: {sample_rate}")
-    print(f"Waveform shape: {waveform.shape}")
-    print(f"Text sample: {text}")
+    print(f"Sample rate: {sample_rate}, Waveform shape: {waveform.shape}, Text sample: {text}")
 else:
     print("Failed to load the sample.")
