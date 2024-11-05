@@ -24,3 +24,16 @@ def extract_mel_spectrogram(file_path, sample_rate=24000, n_fft=1024, hop_length
 
     return melspec, audio
 
+def normalize(melspec):
+    """
+    Normalize the mel-scaled spectrogram.
+
+    Args:
+        melspec (numpy.ndarray): The mel-scaled spectrogram to normalize.
+
+    Returns:
+        numpy.ndarray: The normalized mel-scaled spectrogram.
+    """
+    mean = np.mean(melspec)
+    std = np.std(melspec)
+    return (melspec - mean) / std
