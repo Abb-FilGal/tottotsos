@@ -55,6 +55,7 @@ def save_training_data(melspec, audio, output_dir, file_name):
 
 def preprocess(file_path, sample_rate=24000, n_fft=1024, hop_length=256, n_mels=80):
     melspec, audio = extract_mel_spectrogram(file_path, sample_rate, n_fft, hop_length, n_mels)
-    output_dir = os.path.join("./data", os.path.dirname(file_path), "training_data")
+    map_name = file_path.replace("./data\LibriTTS/dev-clean", "processed")
+    output_dir = os.path.join("./data", map_name.replace(".wav", ""), "training_data")
     file_name = os.path.basename(file_path).replace(".wav", "")
     save_training_data(melspec, audio, output_dir=output_dir, file_name=file_name)
