@@ -88,3 +88,6 @@ if waveform is not None:  # Check if waveform is loaded successfully
     print(f"Sample rate: {sample_rate}, Waveform shape: {waveform.shape}, Text sample: {text}")
 else:
     print("Failed to load the sample.")
+
+#Preprocessing the data
+
