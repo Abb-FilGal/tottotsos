@@ -9,14 +9,14 @@ import numpy as np
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
-torchaudio.datasets.LIBRITTS(root="./data", url="train-clean-100", download=True)
+torchaudio.datasets.LIBRITTS(root="./data", url="dev-clean", download=True)
 
 class LibriTTSDataset(Dataset):
     """
     A PyTorch dataset for the LibriTTS dataset.
     """
 
-    def __init__(self, root_dir, subset="LibriTTS/train-clean-100"):
+    def __init__(self, root_dir, subset="LibriTTS/dev-clean"):
         """
         Initialize the dataset.
 
@@ -91,3 +91,12 @@ else:
 
 #Preprocessing the data
 
+from model.text_preprocess import preprocess as text_preprocess
+from model.audio_preprocess import preprocess as audio_preprocess
+
+for i in range(len(dataset)):
+    audio_path, text_path = dataset.metadata[i][0], dataset.metadata[i][1]
+    print(f"Processing sample {i+1} of {len(dataset)}")
+    text_preprocess(text_path)
+    audio_preprocess(audio_path)
+    print(f"Processed sample {i+1} of {len(dataset)} with {text_path} and {audio_path}")

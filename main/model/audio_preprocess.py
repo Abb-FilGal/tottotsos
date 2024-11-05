@@ -1,6 +1,10 @@
 import librosa
 import numpy as np
+import os
 
+
+import librosa
+import numpy as np
 
 def extract_mel_spectrogram(file_path, sample_rate=24000, n_fft=1024, hop_length=256, n_mels=80):
     """
@@ -19,10 +23,12 @@ def extract_mel_spectrogram(file_path, sample_rate=24000, n_fft=1024, hop_length
     audio, _ = librosa.load(file_path, sr=sample_rate)
     audio = audio / np.max(np.abs(audio))
 
-    melspec = librosa.feature.melspectrogram(audio, sr=sample_rate, n_fft=n_fft, hop_length=hop_length, n_mels=n_mels)
+    # Pass the audio signal as a keyword argument
+    melspec = librosa.feature.melspectrogram(y=audio, sr=sample_rate, n_fft=n_fft, hop_length=hop_length, n_mels=n_mels)
     melspec = np.log(melspec + 1e-8)  # Apply logarithmic compression
 
     return melspec, audio
+
 
 def normalize(melspec):
     """
@@ -37,3 +43,18 @@ def normalize(melspec):
     mean = np.mean(melspec)
     std = np.std(melspec)
     return (melspec - mean) / std
+
+def save_training_data(melspec, audio, output_dir, file_name):
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    if os.path.exists(os.path.join(output_dir, file_name)):
+        print(f"Skipping {file_name} because it already exists.")
+        return
+    np.savez(os.path.join(output_dir, file_name), melspec=melspec, audio=audio)
+
+
+def preprocess(file_path, sample_rate=24000, n_fft=1024, hop_length=256, n_mels=80):
+    melspec, audio = extract_mel_spectrogram(file_path, sample_rate, n_fft, hop_length, n_mels)
+    output_dir = os.path.join("./data", os.path.dirname(file_path), "training_data")
+    file_name = os.path.basename(file_path).replace(".wav", "")
+    save_training_data(melspec, audio, output_dir=output_dir, file_name=file_name)
