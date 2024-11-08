@@ -5,6 +5,7 @@ import os
 import pandas as pd
 import numpy as np
 
+os.system('cls' if os.name == 'nt' else 'clear')
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
@@ -93,10 +94,21 @@ else:
 
 from model.text_preprocess import preprocess as text_preprocess
 from model.audio_preprocess import preprocess as audio_preprocess
+from tqdm import tqdm
 
-for i in range(len(dataset)):
-    audio_path, text_path = dataset.metadata[i][0], dataset.metadata[i][1]
-    print(f"Processing sample {i+1} of {len(dataset)}")
-    text_preprocess(text_path)
-    audio_preprocess(audio_path)
-    print(f"Processed sample {i+1} of {len(dataset)} with {text_path} and {audio_path}")
+if __name__ == "__main__":
+    pbar = tqdm(total=len(dataset), desc="Processing data", unit=" samples")
+    for i in range(len(dataset)):
+        audio_path, text_path = dataset.metadata[i][0], dataset.metadata[i][1]
+        text_preprocess(text_path)
+        audio_preprocess(audio_path)
+        pbar.update(1)
+        if pbar.n % int(len(dataset) / 100) == 0:
+            pbar.set_postfix({"Percentage": f"{pbar.n / len(dataset) * 100:.2f}%"})
+
+
+    # audio_path, text_path = dataset.metadata[i][0], dataset.metadata[i][1]
+    # print(f"Processing sample {i+1} of {len(dataset)}")
+    # text_preprocess(text_path)
+    # audio_preprocess(audio_path)
+    # print(f"Processed sample {i+1} of {len(dataset)} with {text_path} and {audio_path}")
