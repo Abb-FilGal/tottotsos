@@ -98,7 +98,9 @@ from tqdm import tqdm
 
 if __name__ == "__main__":
     pbar = tqdm(total=len(dataset), desc="Processing data", unit=" samples")
-    for i in range(len(dataset)):
+    # for i in range(len(dataset)):
+    testInt = 100
+    for i in range(testInt):
         audio_path, text_path = dataset.metadata[i][0], dataset.metadata[i][1]
         text_preprocess(text_path)
         audio_preprocess(audio_path)
