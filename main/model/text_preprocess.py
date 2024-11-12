@@ -35,7 +35,7 @@ def create_phoneme_mapping(file_path):
     return phoneme_to_id, id_to_phoneme
 
 def save_mappings(phoneme_to_id, id_to_phoneme, file_path):
-    if file_path.find() is not None:
+    if file_path.find("LibriTTS") is not None:
         map_name = file_path.replace("./data\LibriTTS/dev-clean", "processed")
     else:
         map_name = file_path.add("processed")
@@ -61,9 +61,14 @@ def preprocess(file_path):
     phoneme_to_id, id_to_phoneme = create_phoneme_mapping(file_path)
     save_mappings(phoneme_to_id, id_to_phoneme, file_path)
 
-def prerocess_from_file(file):
+def preprocess_from_file(file):
     path = os.path.abspath(file)
     print("path:", path)
     preprocess(path)
+
+def preprocess_from_folder(folder):
+    for file in os.listdir(folder):
+        if file.endswith(".txt"):
+            preprocess_from_file(file)
 
 
