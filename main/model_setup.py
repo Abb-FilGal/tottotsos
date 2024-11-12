@@ -99,4 +99,4 @@ for i in range(len(dataset)):
     print(f"Processing sample {i+1} of {len(dataset)}")
     text_preprocess(text_path)
     audio_preprocess(audio_path)
-    print(f"Processed sample {i+1} of {len(dataset)} with {text_path} and {audio_path}")
+    # print(f"Processed sample {i+1} of {len(dataset)} with {text_path} and {audio_path}")
