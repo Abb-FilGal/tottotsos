@@ -1,4 +1,4 @@
-from main.model.text_preprocess import preprocess_from_file, preprocess_from_folder
+from main.preprocessing.text_preprocess import preprocess_from_file, preprocess_from_folder
 import os
 
 def normalize_text(text):

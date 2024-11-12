@@ -92,8 +92,8 @@ else:
 
 #Preprocessing the data
 
-from model.text_preprocess import preprocess as text_preprocess
-from model.audio_preprocess import preprocess as audio_preprocess
+from preprocessing.text_preprocess import preprocess as text_preprocess
+from preprocessing.audio_preprocess import preprocess as audio_preprocess
 from tqdm import tqdm
 
 if __name__ == "__main__":

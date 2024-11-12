@@ -1,4 +1,4 @@
-from main.model_setup import LibriTTSDataset
+from main.preprocessing.model_setup import LibriTTSDataset
 from torch.utils.data import DataLoader
 
 
