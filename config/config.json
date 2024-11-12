@@ -1,11 +1,9 @@
 {
     "encoder": {
-        "type": "LSTM",
-        "input_size": 80,
-        "hidden_size": 256,
-        "num_layers": 2,
-        "dropout": 0.1,
-        "bidirectional": true
+        "type": "CustomEncoder",
+        "input_dim": 80,
+        "conv_dim": 256,
+        "lstm_dim": 256
     },
     "decoder": {
         "type": "Linear",
