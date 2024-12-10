@@ -2,7 +2,14 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import json
-from main.helper.help import load_config
+import sys
+import os
+
+# Add the project root directory to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from main.helper.load import load_config  # Or use relative import if desired
+
 
 class CustomEncoder(nn.Module):
     def __init__(self, input_dim, conv_dim, lstm_dim, num_conv_layers=2):
@@ -59,3 +66,5 @@ test_input = torch.rand(batch_size, sequence_length, input_dim)
 # Forward pass
 output, hidden, cell = encoder(test_input)
 print("Encoder output shape:", output.shape)
+# import os
+# print(os.getcwd())
