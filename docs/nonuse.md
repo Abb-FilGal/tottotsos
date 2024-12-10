@@ -1,3 +1,7 @@
+# TOP
+
+## second
+
 ### For next time
 
 Great! You've successfully set up a dataset class for the LibriTTS dataset and are able to load audio and text samples. The next steps in building your Text-to-Speech (TTS) model from scratch typically involve the following stages:
@@ -18,13 +22,28 @@ Before training your model, you need to preprocess both the audio and text data.
 
 ### 2. Model Architecture
 
-Design the architecture of your TTS model. Common architectures include:
+## TTS Model Architecture Summary
 
-- **Tacotron**: A sequence-to-sequence model that generates mel-spectrograms from text.
-- **WaveNet**: A generative model that can produce raw audio waveforms from mel-spectrograms.
-- **FastSpeech**: A non-autoregressive model that generates mel-spectrograms more efficiently.
+1. **Encoder**:
+   - Processes input phoneme sequences to create a feature representation.
+   - Use layers like LSTM/GRU or Transformer encoders.
 
-You can start with a simpler architecture like Tacotron or FastSpeech.
+2. **Attention Mechanism**:
+   - Calculates alignment scores to focus on relevant parts of the input.
+   - Produces a context vector that highlights important information for each output timestep.
+
+3. **Decoder**:
+   - Generates Mel-spectrogram frames autoregressively.
+   - Uses the context vector and its own hidden states to predict the next frame.
+
+4. **Loss Function**:
+   - Use Mean Squared Error (MSE) for comparing predicted and target Mel-spectrograms.
+
+5. **Teacher Forcing**:
+   - During training, occasionally feed the true previous frame as input to stabilize learning.
+
+6. **Post-Processing**:
+   - Use a pretrained vocoder (e.g., WaveGlow, HiFi-GAN) to convert Mel-spectrograms to audio waveforms.
 
 ### 3. Training Loop
 

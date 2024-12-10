@@ -1,0 +1,13 @@
+{
+    "encoder": {
+        "type": "CustomEncoder",
+        "input_dim": 80,
+        "conv_dim": 256,
+        "lstm_dim": 256
+    },
+    "decoder": {
+        "type": "Linear",
+        "input_size": 256,
+        "output_size": 80
+    }
+}

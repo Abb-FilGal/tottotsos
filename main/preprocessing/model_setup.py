@@ -92,15 +92,15 @@ else:
 
 #Preprocessing the data
 
-from model.text_preprocess import preprocess as text_preprocess
-from model.audio_preprocess import preprocess as audio_preprocess
+from preprocessing.text_preprocess import preprocess as text_preprocess
+from preprocessing.audio_preprocess import preprocess as audio_preprocess
 from tqdm import tqdm
 
 if __name__ == "__main__":
     pbar = tqdm(total=len(dataset), desc="Processing data", unit=" samples")
-    # for i in range(len(dataset)):
     testInt = 100
     for i in range(testInt):
+    # for i in range(len(dataset)):
         audio_path, text_path = dataset.metadata[i][0], dataset.metadata[i][1]
         text_preprocess(text_path)
         audio_preprocess(audio_path)

@@ -54,8 +54,12 @@ def preprocess(file_path):
     phoneme_to_id, id_to_phoneme = create_phoneme_mapping(file_path)
     save_mappings(phoneme_to_id, id_to_phoneme, file_path)
 
-def prerocess_from_file(file):
+def preprocess_from_file(file):
     path = os.path.abspath(file)
     print("path:", path)
     preprocess(path)
 
+def preprocess_from_folder(folder):
+    for file in os.listdir(folder):
+        if file.endswith(".txt"):
+            preprocess_from_file(file)
