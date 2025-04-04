@@ -1,6 +1,6 @@
+import torch
 import sys
 import os
-import torch
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
 os.system('cls' if os.name == 'nt' else 'clear')
